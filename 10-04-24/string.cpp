@@ -10,6 +10,5 @@ int main() {
     String str3{"Hello IsStep!!!"};
     cout << sizeof(str3) << endl;
     str3.getStr();
-
     return 0;
 }

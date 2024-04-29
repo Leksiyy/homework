@@ -7,7 +7,6 @@ class String {
 private:
     char* str;
     int strSize;
-
 public:
     String() {
         strSize = 80;
