@@ -5,6 +5,7 @@ using namespace std;
 
 class String {
 private:
+    static int count;
     char* str;
     int strSize;
 
@@ -13,6 +14,7 @@ public:
         strSize = 80;
         str = new char[strSize];
         str[0] = '\0';
+        count++;
     };
     String(int size) : String() {
         if (size < 1) {
@@ -36,6 +38,7 @@ public:
             str[i] = inputedString[i];
         }
         str[strSize - 1] = '\0';
+        count++;
     }
     ~String() {
         delete[] str;
@@ -60,8 +63,10 @@ public:
         }
         str[size] = '\0';
     }
-
+    static int getCount() {
+        return count;
+    }
 };
-
+int String::count = 0;
 
 #endif //STUDY_STRING_H

@@ -9,5 +9,6 @@ int main() {
     str3.getStr();
     str1.cinStr("\nprogramming process 80%..");
     str1.getStr();
+    cout << endl << String::getCount() << endl;
     return 0;
 }
