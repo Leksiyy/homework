@@ -14,11 +14,12 @@ public:
         str = new char[strSize];
         str[0] = '\0';
     };
-    String(int size) {
+    String(int size) : String() {
         if (size < 1) {
             cerr << "Строка должна содержать хотя бы 1 символ" << endl;
             exit(1);
         }
+        delete[] str;
         strSize = size + 1;
         str = new char[strSize];
         str[0] = '\0';
@@ -44,6 +45,22 @@ public:
             cout << str[i];
         }
     }
+    void cinStr(const char* inputString) {
+        unsigned int size = 0;
+        while (inputString[size] != '\0') {
+            size++;
+        }
+
+        delete[] str;
+        strSize = size + 1;
+        str = new char[strSize];
+
+        for (int i = 0; i < size; ++i) {
+            str[i] = inputString[i];
+        }
+        str[size] = '\0';
+    }
+
 };
 
 
