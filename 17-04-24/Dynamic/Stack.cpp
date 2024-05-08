@@ -2,6 +2,7 @@
 
 int main() {
     Stack s;
+
     s.addChar('a');
     s.addChar('b');
     s.addChar('c');

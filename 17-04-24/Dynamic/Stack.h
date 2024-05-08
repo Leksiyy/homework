@@ -14,6 +14,7 @@ private:
     char* stack;
     int _deletedIndexes[10]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     int index;
+
 public:
 
     Stack() : index(-1), size(10), stack(new char[size]) {};
