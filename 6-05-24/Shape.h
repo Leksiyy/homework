@@ -10,7 +10,7 @@ public:
     virtual ~Shape() = default;
     virtual void Show() = 0;
     virtual void Save() const = 0;
-    virtual Shape* Load() const = 0;
+    virtual void Load() = 0;
 };
 
 class Square : public Shape {
@@ -18,13 +18,14 @@ private:
     int coordinates[2] {};
     int side;
 public:
+    Square() {coordinates[0] = 0; coordinates[1] = 0; side = 0;};
     Square(initializer_list<int> coord, int s) : side(s) {
         if (coord.size() != 2) {
             cout << "Initializer list must contain 2 elements";
         }
 
         coordinates[0] = *coord.begin();
-        coordinates[1] = *coord.end();
+        coordinates[1] = *(coord.end() - 1);
     }
     void Show() {
         cout << "coordinates:\nx: " << coordinates[0] << "\ny: " << coordinates[1] << "\nside: " << side << endl;
@@ -33,28 +34,30 @@ public:
         const char PATH[] = "../data.txt";
         FILE *file;
         file = fopen(PATH, "a");
-        if (!file) return;
-        fprintf(file, "square %d %d %d\n", coordinates[0], coordinates[1], side);
-        fclose(file);
+        if (file) {
+            fprintf(file, "square %d %d %d\n", coordinates[0], coordinates[1], side);
+            fclose(file);
+        }
     }
 
-    Shape* Load() const {
+    void Load() {
         const char PATH[] = "../data.txt";
         FILE *file;
-        file = fopen(PATH, "a");
+        file = fopen(PATH, "r");
         if (file) {
             const char searchType[] = "square";
             int x, y, side;
             char currentType[15];
 
-            while (feof(file)) {
+            while (!feof(file)) {
                 if (fscanf(file, "%14s %d %d %d", currentType, &x, &y, &side) != 4) {
                     continue;
                 }
 
                 if (strcmp(currentType, searchType) == 0) {
-                    Shape* temp = new Square({x, y}, side);
-                    return temp;
+                    this->coordinates[0] = x;
+                    this->coordinates[1] = y;
+                    this->side = side;
                 }
             }
             fclose(file);
@@ -74,7 +77,7 @@ public:
         }
 
         coordinates[0] = *coord.begin();
-        coordinates[1] = *coord.end();
+        coordinates[1] = *(coord.end() - 1);
     }
     void Show() {
         cout << "coordinates:\nx: " << coordinates[0] << "\ny: " << coordinates[1];
@@ -89,7 +92,7 @@ public:
         fclose(file);
     }
 
-    Shape* Load() const {
+    void Load() {
         const char PATH[] = "../data.txt";
         FILE *file;
         file = fopen(PATH, "a");
@@ -104,8 +107,10 @@ public:
                 }
 
                 if (strcmp(currentType, searchType) == 0) {
-                    Shape* temp = new Rectangle({x, y}, fside, sside);
-                    return temp;
+                    this->coordinates[0] = x;
+                    this->coordinates[1] = y;
+                    this->first_side = fside;
+                    this->second_side = sside;
                 }
             }
             fclose(file);
@@ -124,7 +129,7 @@ public:
         }
 
         coordinates[0] = *coord.begin();
-        coordinates[1] = *coord.end();
+        coordinates[1] = *(coord.end() - 1);
     }
     void Show() {
         cout << "coordinates:\nx: " << coordinates[0] << "\ny: " << coordinates[1] << "\nradius: " << radius << endl;
@@ -138,7 +143,7 @@ public:
         fclose(file);
     }
 
-    Shape* Load() const {
+    void Load()  {
         const char PATH[] = "../data.txt";
         FILE *file;
         file = fopen(PATH, "a");
@@ -153,8 +158,9 @@ public:
                 }
 
                 if (strcmp(currentType, searchType) == 0) {
-                    Shape* temp = new Circle({x, y}, rad);
-                    return temp;
+                    this->coordinates[0] = x;
+                    this->coordinates[1] = y;
+                    this->radius = rad;
                 }
             }
             fclose(file);
@@ -174,7 +180,7 @@ public:
         }
 
         coordinates[0] = *coord.begin();
-        coordinates[1] = *coord.end();
+        coordinates[1] = *(coord.end() - 1);
     }
     void Show() {
         cout << "coordinates:\nx: " << coordinates[0] << "\ny: " << coordinates[1];
@@ -189,7 +195,7 @@ public:
         fclose(file);
     }
 
-    Shape* Load() const {
+    void Load() {
         const char PATH[] = "../data.txt";
         FILE *file;
         file = fopen(PATH, "a");
@@ -204,8 +210,10 @@ public:
                 }
 
                 if (strcmp(currentType, searchType) == 0) {
-                    Shape* temp = new Ellipse({x, y}, fside, sside);
-                    return temp;
+                    this->coordinates[0] = x;
+                    this->coordinates[1] = y;
+                    this->first_side = fside;
+                    this->second_side = sside;
                 }
             }
             fclose(file);
