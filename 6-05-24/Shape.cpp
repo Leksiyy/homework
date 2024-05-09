@@ -20,7 +20,6 @@ int main() {
 
     Shape* newShapes[4];
 
-
     FILE* file = fopen("../data.txt", "r");
     while (!feof(file)) {
         char type[10];
