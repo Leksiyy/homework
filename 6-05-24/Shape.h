@@ -10,7 +10,7 @@ public:
     virtual ~Shape() = default;
     virtual void Show() = 0;
     virtual void Save() const = 0;
-    virtual void Load() = 0;
+    virtual Shape* Load(FILE* file) = 0;
 };
 
 class Square : public Shape {
@@ -40,28 +40,13 @@ public:
         }
     }
 
-    void Load() {
-        const char PATH[] = "../data.txt";
-        FILE *file;
-        file = fopen(PATH, "r");
-        if (file) {
-            const char searchType[] = "square";
-            int x, y, side;
-            char currentType[15];
-
-            while (!feof(file)) {
-                if (fscanf(file, "%14s %d %d %d", currentType, &x, &y, &side) != 4) {
-                    continue;
-                }
-
-                if (strcmp(currentType, searchType) == 0) {
-                    this->coordinates[0] = x;
-                    this->coordinates[1] = y;
-                    this->side = side;
-                }
-            }
-            fclose(file);
+    Shape* Load(FILE* file) {
+        int x, y, side;
+        if (fscanf(file, "%d %d %d", &x, &y, &side) == 3) {
+            return new Square({x, y}, side);
         }
+        cout << "error! cant read shape from file!";
+        return nullptr;
     }
 };
 
@@ -92,29 +77,13 @@ public:
         fclose(file);
     }
 
-    void Load() {
-        const char PATH[] = "../data.txt";
-        FILE *file;
-        file = fopen(PATH, "a");
-        if (file) {
-            const char searchType[] = "rectangle";
-            int x, y, fside, sside;
-            char currentType[15];
-
-            while (feof(file)) {
-                if (fscanf(file, "%14s %d %d %d %d", currentType, &x, &y, &fside, &sside) != 4) {
-                    continue;
-                }
-
-                if (strcmp(currentType, searchType) == 0) {
-                    this->coordinates[0] = x;
-                    this->coordinates[1] = y;
-                    this->first_side = fside;
-                    this->second_side = sside;
-                }
-            }
-            fclose(file);
+    Shape* Load(FILE* file) {
+        int x, y, side, sside;
+        if (fscanf(file, "%d %d %d %d", &x, &y, &side, &sside) == 4) {
+            return new Rectangle({x, y}, side, sside);
         }
+        cout << "error! cant read shape from file!";
+        return nullptr;
     }
 };
 
@@ -143,28 +112,13 @@ public:
         fclose(file);
     }
 
-    void Load()  {
-        const char PATH[] = "../data.txt";
-        FILE *file;
-        file = fopen(PATH, "a");
-        if (file) {
-            const char searchType[] = "circle";
-            int x, y, rad;
-            char currentType[15];
-
-            while (feof(file)) {
-                if (fscanf(file, "%14s %d %d %d", currentType, &x, &y, &rad) != 3) {
-                    continue;
-                }
-
-                if (strcmp(currentType, searchType) == 0) {
-                    this->coordinates[0] = x;
-                    this->coordinates[1] = y;
-                    this->radius = rad;
-                }
-            }
-            fclose(file);
+    Shape* Load(FILE* file) {
+        int x, y, rad;
+        if (fscanf(file, "%d %d %d", &x, &y, &rad) == 3) {
+            return new Circle({x, y}, rad);
         }
+        cout << "error! cant read shape from file!";
+        return nullptr;
     }
 };
 
@@ -195,29 +149,13 @@ public:
         fclose(file);
     }
 
-    void Load() {
-        const char PATH[] = "../data.txt";
-        FILE *file;
-        file = fopen(PATH, "a");
-        if (file) {
-            const char searchType[] = "ellipse";
-            int x, y, fside, sside;
-            char currentType[15];
-
-            while (feof(file)) {
-                if (fscanf(file, "%14s %d %d %d %d", currentType, &x, &y, &fside, &sside) != 4) {
-                    continue;
-                }
-
-                if (strcmp(currentType, searchType) == 0) {
-                    this->coordinates[0] = x;
-                    this->coordinates[1] = y;
-                    this->first_side = fside;
-                    this->second_side = sside;
-                }
-            }
-            fclose(file);
+    Shape* Load(FILE* file) {
+        int x, y, side, sside;
+        if (fscanf(file, "%d %d %d %d", &x, &y, &side, &sside) == 4) {
+            return new Ellipse({x, y}, side, sside);
         }
+        cout << "error! cant read shape from file!";
+        return nullptr;
     }
 };
 
