@@ -42,8 +42,11 @@ public:
 
     Shape* Load(FILE* file) {
         int x, y, side;
-        if (fscanf(file, "%d %d %d", &x, &y, &side) == 3) {
-            return new Square({x, y}, side);
+        if (fscanf(file, " %d %d %d", &x, &y, &side) == 3) {
+            this->coordinates[0] = x;
+            this->coordinates[1] = y;
+            this->side = side;
+            return this;
         }
         cout << "error! cant read shape from file!";
         return nullptr;
@@ -64,6 +67,7 @@ public:
         coordinates[0] = *coord.begin();
         coordinates[1] = *(coord.end() - 1);
     }
+    Rectangle() {coordinates[0] = 0; coordinates[1] = 0; first_side = 0;};
     void Show() {
         cout << "coordinates:\nx: " << coordinates[0] << "\ny: " << coordinates[1];
         cout << "\nfirst side: " << first_side << "\nsecond side: " << second_side << endl;
@@ -80,7 +84,11 @@ public:
     Shape* Load(FILE* file) {
         int x, y, side, sside;
         if (fscanf(file, "%d %d %d %d", &x, &y, &side, &sside) == 4) {
-            return new Rectangle({x, y}, side, sside);
+            this->coordinates[0] = x;
+            this->coordinates[1] = y;
+            this->first_side = side;
+            this->second_side = sside;
+            return this;
         }
         cout << "error! cant read shape from file!";
         return nullptr;
@@ -100,6 +108,7 @@ public:
         coordinates[0] = *coord.begin();
         coordinates[1] = *(coord.end() - 1);
     }
+    Circle() {coordinates[0] = 0; coordinates[1] = 0; radius = 0;};
     void Show() {
         cout << "coordinates:\nx: " << coordinates[0] << "\ny: " << coordinates[1] << "\nradius: " << radius << endl;
     }
@@ -115,7 +124,10 @@ public:
     Shape* Load(FILE* file) {
         int x, y, rad;
         if (fscanf(file, "%d %d %d", &x, &y, &rad) == 3) {
-            return new Circle({x, y}, rad);
+            this->coordinates[0] = x;
+            this->coordinates[1] = y;
+            this->radius = rad;
+            return this;
         }
         cout << "error! cant read shape from file!";
         return nullptr;
@@ -136,6 +148,7 @@ public:
         coordinates[0] = *coord.begin();
         coordinates[1] = *(coord.end() - 1);
     }
+    Ellipse() {coordinates[0] = 0; coordinates[1] = 0; first_side = 0; second_side = 0;};
     void Show() {
         cout << "coordinates:\nx: " << coordinates[0] << "\ny: " << coordinates[1];
         cout << "\nfirst side: " << first_side << "\nsecond side: " << second_side << endl;
@@ -152,7 +165,11 @@ public:
     Shape* Load(FILE* file) {
         int x, y, side, sside;
         if (fscanf(file, "%d %d %d %d", &x, &y, &side, &sside) == 4) {
-            return new Ellipse({x, y}, side, sside);
+            this->coordinates[0] = x;
+            this->coordinates[1] = y;
+            this->first_side = side;
+            this->second_side = sside;
+            return this;
         }
         cout << "error! cant read shape from file!";
         return nullptr;

@@ -23,21 +23,26 @@ int main() {
     FILE* file = fopen("../data.txt", "r");
     while (!feof(file)) {
         char type[10];
-        if (fscanf(file, "%s", type) == 1) {
+        if (fscanf(file, "%s ", type) == 1) {
             if (strcmp(type, "square") == 0) {
-                Shape* square = newShapes[0]->Load(file);
-                square->Show();
+                newShapes[0] = new Square();
+                newShapes[0]->Load(file);
             } else if (strcmp(type, "rectangle") == 0) {
-                Shape* rectangle = newShapes[1]->Load(file);
-                rectangle->Show();
+                newShapes[1] = new Rectangle();
+                newShapes[1]->Load(file);
             } else if (strcmp(type, "circle") == 0) {
-                Shape* circle = newShapes[2]->Load(file);
-                circle->Show();
+                newShapes[2] = new Circle();
+                newShapes[2]->Load(file);
             } else if (strcmp(type, "ellipse") == 0) {
-                Shape* ellipse = newShapes[3]->Load(file);
-                ellipse->Show();
+                newShapes[3] = new Ellipse();
+                newShapes[3]->Load(file);
             }
         }
+    }
+
+    for (int i = 0; i < 4; ++i) {
+        newShapes[i]->Show();
+        cout << endl;
     }
 
     for (int i = 0; i < 4; ++i) {
